@@ -22,6 +22,8 @@ public class PlayerCharacter3RD : MonoBehaviour
 	[SerializeField] private float _sensY;
 	[SerializeField] private Camera _cam;
 	[SerializeField] private CinemachineCamera _cinemachineCamera;
+	public Transform CameraTarget;
+	private Quaternion _nextRotation = Quaternion.identity;
 
 	private float _xRotation;
 	private float _yRotation;
@@ -78,13 +80,7 @@ public class PlayerCharacter3RD : MonoBehaviour
 		Quaternion targetOrientationRotation = Quaternion.Euler(0, _yRotation, 0);
 		_orientation.rotation = Quaternion.Slerp(_orientation.rotation, targetOrientationRotation, Time.deltaTime * 10f);
 
-		// Rotate the camera on the X-axis only (local rotation)
-		Quaternion targetCameraRotation = Quaternion.Euler(_xRotation, 0.0f, 0.0f);
-		_cinemachineCamera.transform.localRotation = Quaternion.Slerp(
-			_cinemachineCamera.transform.localRotation,
-			targetCameraRotation,
-			Time.deltaTime * 10f
-		);
+		CameraTarget.rotation = Quaternion.Slerp(CameraTarget.rotation, targetOrientationRotation, Time.deltaTime * 10f);
 
 
 	}
